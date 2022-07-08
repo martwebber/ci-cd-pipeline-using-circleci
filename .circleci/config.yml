@@ -11,16 +11,16 @@ commands:
           channel: ci-cd-alerts
           template: basic_fail_1
 
-  commands:
-    install_awscli:
-      description: Install aws cli
-      steps:
-        - run:
-          name: Install aws cli
-          command: |
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
+  # commands:
+  #   install_awscli:
+  #     description: Install aws cli
+  #     steps:
+  #       - run:
+  #         name: Install aws cli
+  #         command: |
+  #           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  #           unzip awscliv2.zip
+  #           sudo ./aws/install
 
     # install_ansible:
     #   description: Install ansible
@@ -185,7 +185,10 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - install_awscli
+      - run: 
+          name: Install tar utility
+          command: |
+            yum install -y tar gzip
       - run:
           name: Ensure back-end infrastructure exists
           command: |
